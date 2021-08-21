@@ -1,4 +1,4 @@
-import pygame
+import pygame , os
 
 
 pygame.init()
@@ -26,9 +26,12 @@ moving_right = False
 
 #colors
 BG = (144,201,120)
+RED = (255,0,0)
+
 
 def draw_bg():
     screen.fill(BG)
+    pygame.draw.line(screen,RED , (0,300),(SCREEN_WIDTH,300))
 
 
 class Soldier(pygame.sprite.Sprite):
@@ -46,19 +49,21 @@ class Soldier(pygame.sprite.Sprite):
         self.frame_index = 0
         self.action = 0
         self.update_time = pygame.time.get_ticks()
-        temp_list =[]
         
-        for i in range(5):
-            img = pygame.image.load(f'img/{self.char_type}/Idle/{i}.png')
-            img = pygame.transform.scale(img, (int(img.get_width()*scale),int(img.get_height()*scale)))
-            temp_list.append(img)
-        self.animation_list.append(temp_list)
-        temp_list =[]   
-        for i in range(6):
-            img = pygame.image.load(f'img/{self.char_type}/Run/{i}.png')
-            img = pygame.transform.scale(img, (int(img.get_width()*scale),int(img.get_height()*scale)))
-            temp_list.append(img)
-        self.animation_list.append(temp_list)
+        # load all images of players
+        animation_types = ['Idle', 'Run', 'Jump']
+        for animation in animation_types:
+            temp_list = []
+            # counting number of files in folder
+            num_of_frames = len(os.listdir(f'img/{self.char_type}/{animation}'))
+            for i in range(num_of_frames):
+                img = pygame.image.load(f'img/{self.char_type}/{animation}/{i}.png')
+                img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
+                temp_list.append(img)
+            self.animation_list.append(temp_list)
+             
+            
+    
         self.image = self.animation_list[self.action][self.frame_index]
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
@@ -87,8 +92,13 @@ class Soldier(pygame.sprite.Sprite):
             
          # adding gravity
         self.vel_y += GRAVITY
+        if self.vel_y > 10:
+            self.vel_y
         dy += self.vel_y   
             
+        #check collison with floor
+        if self.rect.bottom + dy > 300:
+            dy = 300 - self.rect.bottom
             
         # update player position
         self.rect.x += dx
