@@ -1,5 +1,6 @@
 import pygame , os
 import random
+import csv
 
 
 pygame.init()
@@ -18,7 +19,12 @@ FPS = 60
 
 #game variables
 GRAVITY = 0.75
-TILE_SIZE = 40 
+# TILE_SIZE = 40 
+ROWS = 16 
+COLS = 150
+TILE_SIZE = SCREEN_HEIGHT // ROWS
+TILE_TYPES = 21
+level = 1 
 
 
 # Player action variables
@@ -446,6 +452,18 @@ enemy = Soldier('enemy',400,200,1.65,2,20,0)
 enemy2 = Soldier('enemy',500,200,1.65,2,20,0)
 enemy_group.add(enemy)
 enemy_group.add(enemy2)
+
+
+# Create emmpty tile list
+world_data = []
+for row in range(ROWS):
+    r = [-1] * COLS
+    world_data.append(r)
+#  load level data and create world
+with open(f'level{level}_data.csv',newline = '') as csvfile:
+    reader = csv.reader(csvfile , delimiter =',')
+    
+
 
 
 
