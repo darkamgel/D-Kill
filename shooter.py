@@ -7,9 +7,6 @@ import button
 mixer.init()
 pygame.init()
 
-
-
-
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = int(SCREEN_WIDTH * 0.8)
 
@@ -603,13 +600,7 @@ class Grenade(pygame.sprite.Sprite):
                 elif self.vel_y >= 0:
                     self.vel_y = 0
                     dy = tile[1].top - self.rect.bottom
-            
-        
-        
-        
-        
-        
-        
+                  
         # update grenade position
         self.rect.x += dx + screen_scroll
         self.rect.y += dy
@@ -689,17 +680,12 @@ class ScreenFade():
 # screen fade creation
 intro_fade = ScreenFade(1,BLACK ,4)
 death_fade = ScreenFade(2 , PINK , 4) 
-        
-        
-            
-        
-        
+                
              
 # create buttons
 start_button = button.Button(SCREEN_WIDTH // 2 - 130 , SCREEN_HEIGHT // 2 - 150 , start_img,1)
 exit_button = button.Button(SCREEN_WIDTH // 2 - 110 , SCREEN_HEIGHT // 2 + 100 , exit_img,1)
 restart_button = button.Button(SCREEN_WIDTH // 2 - 100 , SCREEN_HEIGHT // 2 - 50 , restart_img,2)
-
 
         
 #crearting the sprite groups
@@ -711,13 +697,6 @@ item_box_group = pygame.sprite.Group()
 decoration_group = pygame.sprite.Group()
 water_group = pygame.sprite.Group()
 exit_group = pygame.sprite.Group()
-
-
-
-
-
-        
-
 
 
 # Create emmpty tile list
@@ -735,13 +714,6 @@ world = World()
 player , health_bar = world.process_data(world_data)
 
     
-
-
-
-
-
-
-
 run = True
 while run:
     
@@ -785,9 +757,7 @@ while run:
             enemy.update()
             enemy.draw()
             
-        
-        
-        
+             
         #update and draw groups
         
         bullet_group.update()
@@ -816,9 +786,7 @@ while run:
             if intro_fade.fade():
                 start_intro = False 
                 intro_fade.fade_counter = 0 
-        
-        
-        
+               
         
         #player action updating
         if player.alive:
@@ -877,13 +845,7 @@ while run:
                                 world_data[x][y] = int(tile)
                     world = World()
                     player , health_bar = world.process_data(world_data)
-                
-    
-    
-    
-    
-    
-    
+                  
     
     for event in pygame.event.get():
         # quit game
@@ -917,13 +879,6 @@ while run:
                 grenade = False
                 grenade_thrown = False
                 
-        
-        
-        
-        
-        
-        
-    pygame.display.update()
-            
-            
+          
+    pygame.display.update()           
 pygame.quit()
